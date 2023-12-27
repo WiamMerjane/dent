@@ -1,0 +1,11 @@
+FROM node:18-alpine AS builder
+
+WORKDIR /front
+
+COPY . .
+
+RUN npm install
+RUN npm run build
+
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
